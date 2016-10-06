@@ -1,9 +1,11 @@
 # MMM-Sounds
 
 This a module for the [MagicMirror](https://magicmirror.builders/).
-It can play MP3 sounds through your device when triggered by other modules.
+It can play WAV sounds through your Pi when triggered by other modules.
 
-*This can only play WAV files.*
+**This can only play WAV files.**
+
+Although this has been developed for the Raspbian operating system, any system that uses `alsa` would likely work too.
 
 
 ## Prerequisites
