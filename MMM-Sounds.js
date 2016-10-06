@@ -4,9 +4,11 @@ Module.register('MMM-Sounds', {
      * Default Config
      */
     defaults: {
-        debug:        false,
-        startupSound: null,
-        defaultDelay: 10
+        debug:          false,
+        startupSound:   null,
+        defaultDelay:   10,
+        quietTimeStart: null,
+        quietTimeEnd:   null
     },
 
     /**

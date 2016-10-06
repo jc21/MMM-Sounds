@@ -30,7 +30,9 @@ modules: [
 	{
 		module: 'MMM-Sounds',
 		config: {
-			startupSound: 'wobble.wav'
+			startupSound:   'wobble.wav',
+			quietTimeStart: '23:00',      // 11pm
+			quietTimeEnd:   '07:00'       // 7am
 		}
 	}
 ]
@@ -64,6 +66,20 @@ The following properties can be configured:
 			</td>
 		</tr>
 		<tr>
+			<td><code>quietTimeStart</code></td>
+			<td>The 24 hour and minute start of Quiet time<br>
+				<br><b>Possible values:</b> <code>string</code>
+				<br><b>Default value:</b> <code>null</code>
+			</td>
+		</tr>
+		<tr>
+			<td><code>quietTimeEnd</code></td>
+			<td>The  24 hour and minute end of Quiet time<br>
+				<br><b>Possible values:</b> <code>string</code>
+				<br><b>Default value:</b> <code>null</code>
+			</td>
+		</tr>
+		<tr>
 			<td><code>debug</code></td>
 			<td>Enable to display more debug messages in console<br>
 				<br><b>Possible values:</b> <code>bool</code>
@@ -73,7 +89,21 @@ The following properties can be configured:
 	</tbody>
 </table>
 
-## Telling the module to play sounds
+
+## Quiet Times
+
+This module supports *not* playing sounds during a quiet time, if BOTH the `quietTimeStart` and `quietTimeEnd` config
+options are specified.
+
+The values for these times are HH:mm and must be in 24 hour format. Examples:
+
+- `00:30` - 12:30am
+- `06:30` - 6:30am
+- `14:11` - 2:11pm
+- `23:30` - 11:30pm
+
+
+## Telling the module to play sounds from another module
 
 From another module you can tell this module to play a sound in 2 ways:
 

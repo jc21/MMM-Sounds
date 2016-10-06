@@ -15,7 +15,6 @@ module.exports = NodeHelper.create({
      * @param {*}      payload
      */
     socketNotificationReceived: function (notification, payload) {
-this.log('socketNotificationReceived: ' + notification);
         if (notification === 'CONFIG') {
             if (!this.loaded) {
                 this.config = payload;
@@ -43,24 +42,46 @@ this.log('socketNotificationReceived: ' + notification);
      * @param {Number} [delay]  in ms
      */
     playFile: function (filename, delay) {
-        delay = delay || this.config.defaultDelay;
+        // Only play if outside of quiet hours
+        var play = true;
 
-        var soundfile = __dirname  + '/sounds/' + filename;
+        if (this.config.quietTimeStart && this.config.quietTimeEnd) {
+            this.log('Quiet Time Start is: ' + this.config.quietTimeStart, true);
+            this.log('Quiet Time End is: ' + this.config.quietTimeEnd, true);
 
-        // Make sure file exists before playing
-        try {
-            fs.accessSync(soundfile, fs.F_OK);
-        } catch (e) {
-            // Custom sequence doesn't exist
-            this.log('Sound does not exist: ' + soundfile);
-            return;
+            var start_moment = moment(this.config.quietTimeStart, 'HH:mm');
+            var end_moment   = moment(this.config.quietTimeEnd, 'HH:mm');
+
+            this.log('Start Moment: ' + start_moment.format('YYYY-MM-DD HH:mm'));
+            this.log('End Moment: ' + end_moment.format('YYYY-MM-DD HH:mm'));
+
+            if (moment().isBetween(start_moment, end_moment)) {
+                play = false;
+            }
         }
 
-        this.log('Playing ' + filename + ' with ' + delay + 'ms delay', true);
+        if (play) {
+            delay = delay || this.config.defaultDelay;
 
-        setTimeout(() => {
-            new Player(path.normalize(__dirname  + '/sounds/' + filename)).play();
-        }, delay);
+            var soundfile = __dirname + '/sounds/' + filename;
+
+            // Make sure file exists before playing
+            try {
+                fs.accessSync(soundfile, fs.F_OK);
+            } catch (e) {
+                // Custom sequence doesn't exist
+                this.log('Sound does not exist: ' + soundfile);
+                return;
+            }
+
+            this.log('Playing ' + filename + ' with ' + delay + 'ms delay', true);
+
+            setTimeout(() => {
+                new Player(path.normalize(__dirname + '/sounds/' + filename)).play();
+            }, delay);
+        } else {
+            this.log('Not playing sound as quiet hours are in effect');
+        }
     },
 
     /**
