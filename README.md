@@ -65,7 +65,7 @@ The following properties can be configured:
 		</tr>
 		<tr>
 			<td><code>debug</code></td>
-			<td>Enable to display more PIR debug messages in console<br>
+			<td>Enable to display more debug messages in console<br>
 				<br><b>Possible values:</b> <code>bool</code>
 				<br><b>Default value:</b> <code>false</code>
 			</td>
