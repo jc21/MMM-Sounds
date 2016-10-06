@@ -1,0 +1,21 @@
+{
+  "name": "Magic-Mirror-Module-Sounds",
+  "version": "1.0.0",
+  "description": "Play sounds for the Magic Mirror.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jc21/MMM-Sounds"
+  },
+  "keywords": [
+    "magic mirror",
+    "smart mirror",
+    "MMM-Sounds",
+    "module",
+    "sound"
+  ],
+  "author": "Jamie Curnow",
+  "license": "MIT",
+  "dependencies": {
+    "node-aplay": "^1.0.3"
+  }
+}
