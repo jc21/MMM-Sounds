@@ -27,7 +27,7 @@ Module.register('MMM-Sounds', {
      */
     notificationReceived: function(notification, payload) {
         if (notification === 'PLAY_SOUND') {
-            this.sendSocketNotification(notification, payload)
+            this.sendSocketNotification(notification, payload);
         }
     }
 });

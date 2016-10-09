@@ -91,7 +91,7 @@ module.exports = NodeHelper.create({
      * @param {Boolean} [debug_only]
      */
     log: function (message, debug_only) {
-        if (!debug_only || (debug_only && this.config.debug)) {
+        if (!debug_only || (debug_only && typeof this.config.debug !== 'undefined' && this.config.debug)) {
             console.log('[' + moment().format('YYYY-MM-DD HH:mm:ss') + '] [MMM-Sounds] ' + message);
         }
     }
