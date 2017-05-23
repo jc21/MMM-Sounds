@@ -7,8 +7,8 @@ const Player     = require('node-aplay');
 const moment     = require('moment');
 
 module.exports = NodeHelper.create({
-    loaded: false,
-    config: null,
+    isLoaded: false,
+    config:   null,
 
     /**
      * @param {String} notification
@@ -16,9 +16,9 @@ module.exports = NodeHelper.create({
      */
     socketNotificationReceived: function (notification, payload) {
         if (notification === 'CONFIG') {
-            if (!this.loaded) {
-                this.config = payload;
-                this.loaded = true;
+            if (!this.isLoaded) {
+                this.config   = payload;
+                this.isLoaded = true;
 
                 if (this.config.startupSound) {
                     this.playFile(this.config.startupSound);
@@ -43,14 +43,14 @@ module.exports = NodeHelper.create({
      */
     playFile: function (filename, delay) {
         // Only play if outside of quiet hours
-        var play = true;
+        let play = true;
 
         if (this.config.quietTimeStart && this.config.quietTimeEnd) {
             this.log('Quiet Time Start is: ' + this.config.quietTimeStart, true);
             this.log('Quiet Time End is: ' + this.config.quietTimeEnd, true);
 
-            var start_moment = moment(this.config.quietTimeStart, 'HH:mm');
-            var end_moment   = moment(this.config.quietTimeEnd, 'HH:mm');
+            let start_moment = moment(this.config.quietTimeStart, 'HH:mm');
+            let end_moment   = moment(this.config.quietTimeEnd, 'HH:mm');
 
             this.log('Start Moment: ' + start_moment.format('YYYY-MM-DD HH:mm'));
             this.log('End Moment: ' + end_moment.format('YYYY-MM-DD HH:mm'));
@@ -63,7 +63,7 @@ module.exports = NodeHelper.create({
         if (play) {
             delay = delay || this.config.defaultDelay;
 
-            var soundfile = __dirname + '/sounds/' + filename;
+            let soundfile = __dirname + '/sounds/' + filename;
 
             // Make sure file exists before playing
             try {
