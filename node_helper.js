@@ -1,14 +1,14 @@
 'use strict';
 
-const fs         = require('fs');
-const path       = require('path');
+const fs = require('fs');
+const path = require('path');
 const NodeHelper = require('node_helper');
-const Player     = require('node-aplay');
-const moment     = require('moment');
+const Player = require('node-aplay');
+const moment = require('moment');
 
 module.exports = NodeHelper.create({
     isLoaded: false,
-    config:   null,
+    config: null,
 
     /**
      * @param {String} notification
@@ -17,7 +17,7 @@ module.exports = NodeHelper.create({
     socketNotificationReceived: function (notification, payload) {
         if (notification === 'CONFIG') {
             if (!this.isLoaded) {
-                this.config   = payload;
+                this.config = payload;
                 this.isLoaded = true;
 
                 if (this.config.startupSound) {
@@ -50,7 +50,13 @@ module.exports = NodeHelper.create({
             this.log('Quiet Time End is: ' + this.config.quietTimeEnd, true);
 
             let start_moment = moment(this.config.quietTimeStart, 'HH:mm');
-            let end_moment   = moment(this.config.quietTimeEnd, 'HH:mm');
+            let end_moment = moment(this.config.quietTimeEnd, 'HH:mm');
+
+            var quietTimeStartHour = start_moment.hour();
+            var quietTimeEndHour = end_moment.hour();
+            if (parseInt(quietTimeStartHour) > parseInt(quietTimeEndHour)) {
+                end_moment = end_moment.add(1, 'days');
+            }
 
             this.log('Start Moment: ' + start_moment.format('YYYY-MM-DD HH:mm'));
             this.log('End Moment: ' + end_moment.format('YYYY-MM-DD HH:mm'));
