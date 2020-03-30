@@ -55,8 +55,18 @@ module.exports = NodeHelper.create({
             this.log('Start Moment: ' + start_moment.format('YYYY-MM-DD HH:mm'));
             this.log('End Moment: ' + end_moment.format('YYYY-MM-DD HH:mm'));
 
-            if (moment().isBetween(start_moment, end_moment)) {
-                play = false;
+            let time = moment();
+
+            if (start_moment.isBefore(end_moment)) {
+                if (moment().isBetween(start_moment, end_moment)) {
+                    play = false;
+                }
+            } else {
+                let day_start = moment('00:00:00', 'HH:mm:ss');
+                let day_end = moment('23:59:59', 'HH:mm:ss');
+                if (time.isBetween(day_start, end_moment) || time.isBetween(start_moment, day_end)) {
+                    play = false;
+                }
             }
         }
 
